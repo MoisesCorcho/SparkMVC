@@ -30,8 +30,29 @@ class Router
      * 
      * @return void
      */
-    public function add($route, $params)
+    public function add($route, $params = [])
     {
+        // Convert the route to a regular expression: escape forward slashes e.g. '/' => '\/'
+        $route = preg_replace('/\//', '\\/', $route);
+
+        // Convert variables beetwen curly braces '{}' e.g. {controller} => (?P<controller>[a-z-]+)
+        $route = preg_replace('/\{([a-z]+)\}/', '(?P<\1>[a-z-]+)', $route);
+
+        // Convert variables with a custom regular expressions e.g. {iduser:\d+} => (?P<iduser>\d+)
+        /**
+         * ([^\}]+) this part is used to escape the } character and then deny it with ^ which 
+         * means it will search for all characters that are not a } but keeping in mind
+         * it will depend on which regular expresion we put in the parameter when we add the route in index.php {id:\d+}
+         * e.g. => $router->add('users/{iduser:\w+}/products/{idprod:\d+}');
+         * 
+         * \d+ => match with ONE or more digits from 0 to 9 | 0 - 9
+         * \w+ => match with ONE or more characters a - z | A - Z | 0 - 9
+         */
+        $route = preg_replace('/\{([a-z]+):([^\}]+)\}/', '(?P<\1>\2)', $route);
+
+        // Add start and end delimiters, and case insensitive flag
+        $route = '/^' . $route . '$/i';
+
         $this->routes[$route] = $params;
     }
 
@@ -54,33 +75,26 @@ class Router
      */
     public function pairing($url)
     {
-        /*
+        // Match to the fixed URL format /controller/action
+        // $reg_exp = "/^(?P<controller>[a-z-]+)\/(?P<action>[a-z-]+)$/";
+
         foreach ($this->routes as $route => $params) {
-            if ($url == $route) {
+            if (preg_match($route, $url, $matches)) {
+                
+                foreach ($matches as $key => $match) {
+                    if (is_string($key)) {
+                        $params[$key] = $match;
+                    }
+                }
+                
                 $this->params = $params;
                 return true;
             }
         }
-        */
-
-        $reg_exp = "/^(?P<controller>[a-z-]+)\/(?P<action>[a-z-]+)$/";
-
-        if (preg_match($reg_exp, $url, $matches)) {
-            // Get named capture group values
-            $params = [];
-
-            foreach ($matches as $key => $match) {
-                if (is_string($key)) {
-                    $params[$key] = $match;
-                }
-            }
-
-            $this->params = $params;
-            return true;
-        }
-
+        
         return false;
     }
+
 
     /**
      * Get the currently matched parameters
