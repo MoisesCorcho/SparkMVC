@@ -115,10 +115,12 @@ class Router
      */
     public function dispatch($url)
     {
+        $url = $this->removeQueryStringVariables($url);
+
         if ($this->pairing($url)) {
             $controller = $this->params['controller'];
             $controller = $this->convertToStudlyCaps($controller);
-            // var_dump($controller);
+            
             $controller = "App\Controllers\\$controller";
             
 
@@ -148,7 +150,7 @@ class Router
      * @param string $string The string to convert
      * @return string
      */
-    public function convertToStudlyCaps($string)
+    protected function convertToStudlyCaps($string)
     {
         return str_replace('-', '', ucwords($string, '-'));
     }
@@ -160,9 +162,73 @@ class Router
      * @param string $string
      * @return string
      */
-    public function convertToCamelCase($string)
+    protected function convertToCamelCase($string)
     {
         return lcfirst($this->convertToStudlyCaps($string));
+    }
+
+    /**
+     * Remove the query string variables from the URL (if any). As the full
+     * query string is used for the route, any variables at the end will need
+     * to be removed before the route is matched to the routing table. For
+     * example:
+     *
+     *   URL                           $_SERVER['QUERY_STRING']  Route
+     *   -------------------------------------------------------------------
+     *   localhost                     ''                        ''
+     *   localhost/?                   ''                        ''
+     *   localhost/?page=1             page=1                    ''
+     *   localhost/posts?page=1        posts&page=1              posts
+     *   localhost/posts/index         posts/index               posts/index
+     *   localhost/posts/index?page=1  posts/index&page=1        posts/index
+     *
+     * A URL of the format localhost/?page (one variable name, no value) won't
+     * work however. (NB. The .htaccess file converts the first ? to a & when
+     * it's passed through to the $_SERVER variable).
+     * 
+     * REMENBER that we will have access to the query parameters using the $_GET superglobal variable;
+     *
+     * @param string $url The full URL
+     *
+     * @return string The URL with the query string variables removed
+     */
+    protected function removeQueryStringVariables($url)
+    {
+
+        /**
+         * this is an example from the $url in the param
+         * e.g. => "posts-controller/index&par1=one&par2=two&par3=three"
+         */
+
+        if ($url != '') {
+            
+            /**
+             * We separate the URL from the params. We get the URL in one Array and the params in other array.
+             * e.g. This is an example result from $parts = explode('&', $url, 2);
+             * 
+             * array(2) {
+             *   [0]=>
+             *   string(22) "posts-controller/index"
+             *   [1]=>
+             *   string(28) "par1=one&par2=two&par3=three"
+             *  }
+             */
+            $parts = explode('&', $url, 2);
+
+            /**
+             * If there are no = characters in the $parts[0] (the URL), 
+             * the $url variable will be $parts[0], that is, the URL.
+             * IF NOT the $url variable will be an empty string.
+             */
+            if (strpos($parts[0], '=') === false) {
+                $url = $parts[0];
+
+            } else {
+                $url = '';
+            }
+        }
+
+        return $url;
     }
     
 }

@@ -13,8 +13,6 @@
     $root = dirname(__DIR__); // Get the parent directory
     $file = str_replace('\\', '/', $root) . '/' . str_replace('\\', '/', $class) . '.php'; // We replace all the '\' with '/'
 
-    var_dump($file); echo '<br>';
-
     if (is_readable($file)) {
         require $file;
     }
@@ -24,13 +22,13 @@
  * Routing
  */
 
-// $router = new Router();
 $router = new Core\Router();
 
 
 // Add the routes (TEST)
 $router->add('', ['controller' => 'HomeController', 'method' => 'index']);
 $router->add('{controller}/{method}');
+$router->add('{id:\w+}/{idd:\w+}');
 $router->add('{controller}/{id:\d+}/{method}');
 
 /**
@@ -54,6 +52,21 @@ $router->add('{controller}/{id:\d+}/{method}');
  * - methods names follow the camelCase standard. e.g. addNew. So you should name them like that.
  * - You must name methods in the route like add-new
  * e.g. add-new => addNew
+*/
+
+/*
+ BORRAR
+var_dump($_SERVER['QUERY_STRING']);
+
+$router->pairing($_SERVER['QUERY_STRING']);
+
+echo '<pre>';
+var_dump($router->getRoutes());
+echo '</pre>';
+
+echo '<pre>';
+var_dump($router->getParams());
+echo '</pre>';
 */
 
 $router->dispatch($_SERVER['QUERY_STRING']);

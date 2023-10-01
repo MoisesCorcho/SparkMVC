@@ -12,7 +12,9 @@ class PostsController
 {
     public function index()
     {
-        echo 'Hello from the index method in the PostController';        
+        echo 'Hello from the index action in the Posts controller!';
+        echo '<p>Query string parameters: <pre>' .
+             htmlspecialchars(print_r($_GET, true)) . '</pre></p>';
     }
 
     public function addNew()
