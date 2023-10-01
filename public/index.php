@@ -6,26 +6,35 @@
  */
 
 /**
- * Routing
+ * Autoloader.
  */
-require_once '../Core/Router.php';
 
-$router = new Router();
+ spl_autoload_register(function ($class) {
+    $root = dirname(__DIR__); // Get the parent directory
+    $file = str_replace('\\', '/', $root) . '/' . str_replace('\\', '/', $class) . '.php'; // We replace all the '\' with '/'
 
-// Add the routes (TEST)
-// $router->add('', ['controller' => 'Home', 'action' => 'index']);
-// $router->add('{posts}', ['controller' => 'Posts', 'action' => 'index']);
-$router->add('posts', ['controller' => 'Posts', 'action' => 'index']);
-// $router->add('posts/new', ['controller' => 'Posts', 'action' => 'new']);
-$router->add('one/two/{three}');
-$router->add('{controller}/{action}');
-$router->add('admin/{action}/{controller}');
-$router->add('admin/{action}/{controller}/{more}');
-$router->add('products/{idproduct}/user/{id}');
-$router->add('users/{uuiduser:[\w-]+}/posts/{idpost:\d+}');
+    var_dump($file); echo '<br>';
+
+    if (is_readable($file)) {
+        require $file;
+    }
+ });
 
 /**
- * TO PLACE IN THE PARAMETERS.
+ * Routing
+ */
+
+// $router = new Router();
+$router = new Core\Router();
+
+
+// Add the routes (TEST)
+$router->add('', ['controller' => 'HomeController', 'method' => 'index']);
+$router->add('{controller}/{method}');
+$router->add('{controller}/{id:\d+}/{method}');
+
+/**
+ * OPTIONS TO DEFINE THE PARAMETERS.
  * 
  *  \d+     => match with ONE or more digits from 0 to 9
  *  \w+     => match with ONE or more characters a - z | A - Z | 0 - 9
@@ -33,20 +42,18 @@ $router->add('users/{uuiduser:[\w-]+}/posts/{idpost:\d+}');
  *  \s+     => match with ONE or more blank spaces (do not use to params, just curiosity)
  */
 
+/**
+ * RULES TO NAMING CONTROLLERS AND METHODS IN THE ROUTES
+ *  
+ * CONTROLLERS
+ * - Controller names follow the StudlyCase standard. e.g. PostsController. So you should name them like that.
+ * - You must name controllers in the route like posts-controller
+ * e.g. posts-controllers => PostsController
+ * 
+ * METHODS
+ * - methods names follow the camelCase standard. e.g. addNew. So you should name them like that.
+ * - You must name methods in the route like add-new
+ * e.g. add-new => addNew
+*/
 
-echo '<pre>';
-echo htmlspecialchars(print_r($router->getRoutes(), true));
-echo '</pre>';
-
-$url = $_SERVER['QUERY_STRING'];
-echo '<pre>';
-var_dump($url);
-echo '</pre>';
-
-if ($router->pairing($url)) {
-    echo '<pre>';
-    var_dump($router->getParams());
-    echo '</pre>';
-} else {
-    echo 'No route found for URL '. $url;
-}
+$router->dispatch($_SERVER['QUERY_STRING']);

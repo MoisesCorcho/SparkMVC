@@ -1,5 +1,7 @@
 <?php
 
+namespace Core;
+
 /**
  * Router
  * 
@@ -74,10 +76,7 @@ class Router
      * @return boolean true if a match found, false otherwise
      */
     public function pairing($url)
-    {
-        // Match to the fixed URL format /controller/action
-        // $reg_exp = "/^(?P<controller>[a-z-]+)\/(?P<action>[a-z-]+)$/";
-
+    {        
         foreach ($this->routes as $route => $params) {
             if (preg_match($route, $url, $matches)) {
                 
@@ -105,4 +104,65 @@ class Router
     {   
         return $this->params;
     }
+
+
+    /**
+     * Dispatch the route, creating the controller object and running the
+     * action method
+     *
+     * @param string $url The route URL
+     * @return void
+     */
+    public function dispatch($url)
+    {
+        if ($this->pairing($url)) {
+            $controller = $this->params['controller'];
+            $controller = $this->convertToStudlyCaps($controller);
+            // var_dump($controller);
+            $controller = "App\Controllers\\$controller";
+            
+
+            if (class_exists($controller)) {
+                $controller_object = new $controller();
+
+                $method = $this->params['method'];
+                $method = $this->convertToCamelCase($method);
+
+                if (is_callable([$controller_object, $method])) {
+                    $controller_object->$method();
+                } else {
+                    echo "Method $method (in controller $controller) not found.";
+                }
+            } else {
+                echo "Controller class $controller not found.";
+            }
+        } else {
+            echo 'No route matched.';
+        }
+    }
+
+    /**
+     * Convert a string separate by - to StudyCaps
+     * e.g. post-authors => PostAuthors
+     *
+     * @param string $string The string to convert
+     * @return string
+     */
+    public function convertToStudlyCaps($string)
+    {
+        return str_replace('-', '', ucwords($string, '-'));
+    }
+
+    /**
+     * Convert a string separate by - to camelCase
+     * e.g. add-new => addNew
+     *
+     * @param string $string
+     * @return string
+     */
+    public function convertToCamelCase($string)
+    {
+        return lcfirst($this->convertToStudlyCaps($string));
+    }
+    
 }
