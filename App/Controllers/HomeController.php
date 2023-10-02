@@ -2,13 +2,13 @@
 
 namespace App\Controllers;
 
+use Core\Controller;
 /**
  * Home Controller
  * 
  * PHP version 8.1.6
  */
-
-class HomeController
+class HomeController extends Controller
 {
 
     /**

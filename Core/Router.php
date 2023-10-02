@@ -125,7 +125,7 @@ class Router
             
 
             if (class_exists($controller)) {
-                $controller_object = new $controller();
+                $controller_object = new $controller($this->params);
 
                 $method = $this->params['method'];
                 $method = $this->convertToCamelCase($method);
