@@ -15,8 +15,10 @@ class View
      * @param string $view the view file.
      * @return void
      */
-    public static function render($view)
+    public static function render($view, $args = [])
     {
+        extract($args, EXTR_SKIP);
+
         $file = "../App/Views/$view.php"; // Relative to core directory
 
         if (is_readable($file)) {
