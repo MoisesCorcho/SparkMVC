@@ -121,8 +121,8 @@ class Router
             $controller = $this->params['controller'];
             $controller = $this->convertToStudlyCaps($controller);
             
-            $controller = "App\Controllers\\$controller";
-            
+            // $controller = "App\Controllers\\$controller";
+            $controller = $this->getNamespace() . $controller;
 
             if (class_exists($controller)) {
                 $controller_object = new $controller($this->params);
@@ -130,10 +130,10 @@ class Router
                 $method = $this->params['method'];
                 $method = $this->convertToCamelCase($method);
 
-                if (is_callable([$controller_object, $method])) {
+                if (preg_match('/action$/i', $method) == 0) {
                     $controller_object->$method();
                 } else {
-                    echo "Method $method (in controller $controller) not found.";
+                    throw new \Exception("Method $method in controller $controller cannot be called directly - remove the Action suffix to call this method");
                 }
             } else {
                 echo "Controller class $controller not found.";
@@ -229,6 +229,23 @@ class Router
         }
 
         return $url;
+    }
+
+    /**
+     * Get the namespce for the controller class. The namespace defined in the
+     * route parameters is added if present
+     *
+     * @return string The request URL
+     */
+    public function getNamespace()
+    {
+        $namespace = 'App\Controllers\\';
+
+        if (array_key_exists('namespace', $this->params)) {
+            $namespace .= $this->params['namespace'] . '\\';
+        }
+
+        return $namespace;
     }
     
 }

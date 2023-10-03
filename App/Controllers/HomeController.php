@@ -12,14 +12,36 @@ class HomeController extends Controller
 {
 
     /**
+     * Before filter
+     *
+     * @return void
+     */
+    public function before()
+    {
+        echo '(before)';
+        return false;
+    }
+
+    /**
+     * After filter
+     *
+     * @return void
+     */
+    public function after()
+    {
+        echo '(after)';
+    }
+
+    /**
      * Show the index page
      *
      * @return void
      */
-    public function index()
+    public function indexAction()
     {
         echo 'Hello from the index action in the Home controller!';
         echo '<p>Query string parameters: <pre>' .
         htmlspecialchars(print_r($_GET, true)) . '</pre></p>';
     }
+
 }

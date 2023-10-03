@@ -49,9 +49,7 @@ $router = new Core\Router();
 $router->add('', ['controller' => 'HomeController', 'method' => 'index']);
 $router->add('{controller}/{method}');
 $router->add('{controller}/{id:\d+}/{method}');
-
-
-
+$router->add('admin/{controller}/{method}', ['namespace' => 'Admin']);
 
 
 $router->dispatch($_SERVER['QUERY_STRING']);

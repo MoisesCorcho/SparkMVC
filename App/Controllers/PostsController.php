@@ -11,19 +11,19 @@ use Core\Controller;
  */
 class PostsController extends Controller
 {
-    public function index()
+    public function indexAction()
     {
         echo 'Hello from the index action in the Posts controller!';
         echo '<p>Query string parameters: <pre>' .
              htmlspecialchars(print_r($_GET, true)) . '</pre></p>';
     }
 
-    public function addNew()
+    public function addNewAction()
     {
         echo 'Hello from the addNew method in the PostController';
     }
 
-    public function edit()
+    public function editAction()
     {
         echo 'Hello from the edit action in the Posts controller!';
         echo '<p>Query string parameters: <pre>' .
