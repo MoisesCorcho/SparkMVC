@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use Core\Controller;
+use Core\View;
 /**
  * Home Controller
  * 
@@ -19,7 +20,7 @@ class HomeController extends Controller
     public function before()
     {
         echo '(before)';
-        return false;
+        // return false;
     }
 
     /**
@@ -39,9 +40,10 @@ class HomeController extends Controller
      */
     public function indexAction()
     {
-        echo 'Hello from the index action in the Home controller!';
-        echo '<p>Query string parameters: <pre>' .
-        htmlspecialchars(print_r($_GET, true)) . '</pre></p>';
+        // echo 'Hello from the index action in the Home controller!';
+        // echo '<p>Query string parameters: <pre>' .
+        // htmlspecialchars(print_r($_GET, true)) . '</pre></p>';
+        View::render('Home/index');
     }
 
 }
