@@ -6,6 +6,11 @@
  */
 
 /**
+ * Composer Autoloader
+ */
+require '../vendor/autoload.php';
+ 
+/**
  * Autoloader.
  */
  spl_autoload_register(function ($class) {

@@ -40,12 +40,9 @@ class HomeController extends Controller
      */
     public function indexAction()
     {
-        // echo 'Hello from the index action in the Home controller!';
-        // echo '<p>Query string parameters: <pre>' .
-        // htmlspecialchars(print_r($_GET, true)) . '</pre></p>';
-        View::render('Home/index', [
-            'name' => 'EL MOISES',
-            'colours' => ['red', 'green', 'gray']
+        View::renderBlade('Home/index', [
+            'test' => 'Hey! Im just a test variable',
+            'colours' => ['green', 'red', 'blue']
         ]);
     }
 
