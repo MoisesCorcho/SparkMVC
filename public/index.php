@@ -7,20 +7,31 @@
 
 /**
  * Composer Autoloader
+ * 
+ * composer autoloader will autoload all the third-party packages 
+ * that we install and all the packages that we will create 
+ * (we have to specify the latter in composer.json). e.g.
+ * 
+ * "autoload": {
+ *   "psr-4": {
+ *      "Core\\": "Core/",
+ *       "App\\": "App/"
+ *   }
+ * }
+ * 
+ * "Core\\" is the namespace.
+ * "Core/"  is the folder name.
+ * 
+ * ---------------------------------------------------------------
+ * MODIFY THE AUTOLOAD PSR-4 FUNCTION IN composer.json
+ * ---------------------------------------------------------------
+ * 
+ * You have to run the "composer dump-autoload" command 
+ * every time you want to add a new path to the composer.json file 
+ * inside autoload => psr-4
  */
 require '../vendor/autoload.php';
- 
-/**
- * Autoloader.
- */
- spl_autoload_register(function ($class) {
-    $root = dirname(__DIR__); // Get the parent directory
-    $file = str_replace('\\', '/', $root) . '/' . str_replace('\\', '/', $class) . '.php'; // We replace all the '\' with '/'
 
-    if (is_readable($file)) {
-        require $file;
-    }
- });
 
 /**
  * Routing
@@ -29,25 +40,30 @@ $router = new Core\Router();
 
 
 // Add the routes
-
 /**
+ * --------------------------------------------------------------
  * OPTIONS TO DEFINE THE PARAMETERS.
+ * --------------------------------------------------------------
  * 
  *  \d+     => match with ONE or more digits from 0 to 9
- *  \w+     => match with ONE or more characters a - z | A - Z | 0 - 9
- *  [\w-]+  => match with ONE or more characters a - z | A - Z | 0 - 9 AND '-' (hyphen)
- *  \s+     => match with ONE or more blank spaces (do not use to params, just curiosity)
+ *  \w+     => match with ONE or more characters 
+ *           => a - z | A - Z | 0 - 9
+ *  [\w-]+  => match with ONE or more characters 
+ *           => a - z | A - Z | 0 - 9 AND '-' (hyphen)
  * 
- * /======================================================================================\ 
+ * --------------------------------------------------------------
  * RULES TO NAMING CONTROLLERS AND METHODS IN THE ROUTES
- *  
+ * -------------------------------------------------------------- 
+ * 
  *  CONTROLLERS
- *  - Controller names follow the StudlyCase standard. e.g. PostsController. So you should name them like that.
+ *  - Controller names follow the StudlyCase standard. e.g. 
+ *    PostsController. So you should name them like that.
  *  - You must name controllers in the route like posts-controller
  *  e.g. posts-controllers => PostsController
  *  
  *  METHODS
- *  - methods names follow the camelCase standard. e.g. addNew. So you should name them like that.
+ *  - methods names follow the camelCase standard. e.g. addNew. 
+ *    So you should name them like that.
  *  - You must name methods in the route like add-new
  *  e.g. add-new => addNew
  */

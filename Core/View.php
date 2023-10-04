@@ -19,6 +19,11 @@ class View
     protected static $blade;
 
 
+    /**
+     * Initializes the Blade Template Engine
+     *
+     * @return void
+     */
     public static function initBlade()
     {
         if ( !isset(self::$blade) ) {
@@ -28,11 +33,26 @@ class View
         }
     }
 
+    /**
+     * Render blade template
+     *
+     * @param string $view
+     * @param array $args
+     * @return void
+     */
     public static function renderBlade($view, $args = [])
     {
         self::initBlade();
 
-        echo self::$blade->render($view, $args);
+        
+        $file = "../resources/views/$view.blade.php"; // Relative to core directory
+
+        if (is_readable($file)) {
+            echo self::$blade->render($view, $args);
+        } else {
+            echo "$file not found";
+        }
+
     }
 
     /**

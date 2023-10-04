@@ -121,7 +121,6 @@ class Router
             $controller = $this->params['controller'];
             $controller = $this->convertToStudlyCaps($controller);
             
-            // $controller = "App\Controllers\\$controller";
             $controller = $this->getNamespace() . $controller;
 
             if (class_exists($controller)) {
