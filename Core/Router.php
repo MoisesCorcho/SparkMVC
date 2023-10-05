@@ -135,10 +135,10 @@ class Router
                     throw new \Exception("Method $method in controller $controller cannot be called directly - remove the Action suffix to call this method");
                 }
             } else {
-                echo "Controller class $controller not found.";
+                throw new \Exception("Controller class $controller not found.");
             }
         } else {
-            echo 'No route matched.';
+            throw new \Exception('No route matched.', 404);
         }
     }
 

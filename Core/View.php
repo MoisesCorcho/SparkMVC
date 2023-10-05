@@ -50,7 +50,7 @@ class View
         if (is_readable($file)) {
             echo self::$blade->render($view, $args);
         } else {
-            echo "$file not found";
+            throw new \Exception("$file not found");
         }
 
     }
@@ -70,7 +70,7 @@ class View
         if (is_readable($file)) {
             require_once $file; 
         } else {
-            echo "$file not found";
+            throw new \Exception("$file not found");
         }
     }
 }

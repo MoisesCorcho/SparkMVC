@@ -111,3 +111,32 @@ A simple fix to close the potential security hole. Updated code is attached to t
 
 = ADD A ROUTE NAMESPACE OPTION
 we added the option to be able to pass a namespace option as an associative array when defining routes, to specify the controller namespace.
+
+-------------------
+Conclusion
+-------------------
+Throughout this course, you've built a complete MVC framework, from scratch. 
+Including: 
+
+=> code organised into models, views and controllers, making it easy to separate the application 
+
+=> code from the presentation code and making it easier to write and maintain your application;
+
+=> An advanced router, with pretty URLs and route variables using regular expressions; 
+
+=> Classes organised into namespaces and loaded automatically on demand without having to explicitly require 
+them using the Composer utility; 
+
+=> Controllers that decide what response to return to the user, including action filters to allow you 
+to run code before each action in a controller - useful for authentication; 
+
+=> Views that just contain presentation code. And we also added the Blade template engine to make the 
+views even easier to create; 
+
+=> Models to handle the data in your application, including only connecting to the database when necessary; 
+
+=> Configuration and error handling that you can change between environments, depending on whether you're 
+developing, or in production; 
+
+=> And above all, in doing all this, you can now understand just how an MVC framework is put together. 
+So if you want to learn a framework like Laravel, Phalcon or CakePHP, it'll be much easier.

@@ -34,6 +34,23 @@ require '../vendor/autoload.php';
 
 
 /**
+ * Sets which PHP errors are reported.
+ * "E_ALL" Report all PHP errors
+ */
+error_reporting(E_ALL);
+
+/**
+ * Sets a user-defined error handler function in the path Core\Error::errorHandler
+ */
+set_error_handler('Core\Error::errorHandler');
+
+/**
+ * Sets a user-defined exception handler function in the path Core\Error::exceptionHandler
+ */
+set_exception_handler('Core\Error::exceptionHandler');
+
+
+/**
  * Routing
  */
 $router = new Core\Router();
