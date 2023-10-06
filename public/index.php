@@ -40,12 +40,14 @@ require '../vendor/autoload.php';
 error_reporting(E_ALL);
 
 /**
- * Sets a user-defined error handler function in the path Core\Error::errorHandler
+ * Sets a user-defined error handler function in the 
+ * path Core\Error::errorHandler
  */
 set_error_handler('Core\Error::errorHandler');
 
 /**
- * Sets a user-defined exception handler function in the path Core\Error::exceptionHandler
+ * Sets a user-defined exception handler function in 
+ * the path Core\Error::exceptionHandler
  */
 set_exception_handler('Core\Error::exceptionHandler');
 
@@ -53,41 +55,5 @@ set_exception_handler('Core\Error::exceptionHandler');
 /**
  * Routing
  */
-$router = new Core\Router();
+$router = new routes\Routes;
 
-
-// Add the routes
-/**
- * --------------------------------------------------------------
- * OPTIONS TO DEFINE THE PARAMETERS.
- * --------------------------------------------------------------
- * 
- *  \d+     => match with ONE or more digits from 0 to 9
- *  \w+     => match with ONE or more characters 
- *           => a - z | A - Z | 0 - 9
- *  [\w-]+  => match with ONE or more characters 
- *           => a - z | A - Z | 0 - 9 AND '-' (hyphen)
- * 
- * --------------------------------------------------------------
- * RULES TO NAMING CONTROLLERS AND METHODS IN THE ROUTES
- * -------------------------------------------------------------- 
- * 
- *  CONTROLLERS
- *  - Controller names follow the StudlyCase standard. e.g. 
- *    PostsController. So you should name them like that.
- *  - You must name controllers in the route like posts-controller
- *  e.g. posts-controllers => PostsController
- *  
- *  METHODS
- *  - methods names follow the camelCase standard. e.g. addNew. 
- *    So you should name them like that.
- *  - You must name methods in the route like add-new
- *  e.g. add-new => addNew
- */
-$router->add('', ['controller' => 'HomeController', 'method' => 'index']);
-$router->add('{controller}/{method}');
-$router->add('{controller}/{id:\d+}/{method}');
-$router->add('admin/{controller}/{method}', ['namespace' => 'Admin']);
-
-
-$router->dispatch($_SERVER['QUERY_STRING']);
