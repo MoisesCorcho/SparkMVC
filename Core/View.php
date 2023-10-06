@@ -43,16 +43,14 @@ class View
     public static function renderBlade($view, $args = [])
     {
         self::initBlade();
-
         
         $file = "../resources/views/$view.blade.php"; // Relative to core directory
 
         if (is_readable($file)) {
             echo self::$blade->render($view, $args);
         } else {
-            throw new \Exception("$file not found");
+            throw new \Exception("$file not found", 404);
         }
-
     }
 
     /**
@@ -70,7 +68,7 @@ class View
         if (is_readable($file)) {
             require_once $file; 
         } else {
-            throw new \Exception("$file not found");
+            throw new \Exception("$file not found", 404);
         }
     }
 }

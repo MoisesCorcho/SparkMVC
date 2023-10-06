@@ -112,9 +112,9 @@ A simple fix to close the potential security hole. Updated code is attached to t
 = ADD A ROUTE NAMESPACE OPTION
 we added the option to be able to pass a namespace option as an associative array when defining routes, to specify the controller namespace.
 
--------------------
-Conclusion
--------------------
+-----------------------------------------------------
+Conclusion                                          |
+-----------------------------------------------------
 Throughout this course, you've built a complete MVC framework, from scratch. 
 Including: 
 

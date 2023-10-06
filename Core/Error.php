@@ -3,6 +3,7 @@
 namespace Core;
 
 use App\Config\Config;
+use Core\View;
 
 /**
  * Error and exception handler.
@@ -85,9 +86,9 @@ class Error
             error_log($message);
             
             if ($code == 404) {
-                echo "<h1>Page not found</h1>";
+                View::renderBlade('Errors/404');
             } else {
-                echo "<h1>An error ocurred</h1>";
+                View::renderBlade('Errors/500');
             }
         }
     }

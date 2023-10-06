@@ -19,7 +19,7 @@ class HomeController extends Controller
      */
     public function before()
     {
-        echo '(before)';
+        // echo '(before)';
         // return false;
     }
 
@@ -30,7 +30,7 @@ class HomeController extends Controller
      */
     public function after()
     {
-        echo '(after)';
+        // echo '(after)';
     }
 
     /**
@@ -40,7 +40,7 @@ class HomeController extends Controller
      */
     public function indexAction()
     {
-        View::renderBlade('Home/index', [
+        View::renderBlade('Home/welcome', [
             'test' => 'Hey! Im just a test variable',
             'colours' => ['green', 'red', 'blue']
         ]);
