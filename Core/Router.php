@@ -133,7 +133,6 @@ class Router
                 $method_params = $this->getMethodParams($this->params);
 
                 if (preg_match('/action$/i', $method) == 0) {
-                    // $controller_object->$method();
                     call_user_func_array([$controller_object, $method], $method_params);
                 } else {
                     throw new \Exception("Method $method in controller $controller cannot be called directly - remove the Action suffix to call this method");
@@ -251,7 +250,13 @@ class Router
         return $namespace;
     }
 
-    public function getMethodParams($params)
+    /**
+     * Returns an array with the method parameters. 
+     *
+     * @param array $params $this->params
+     * @return array
+     */
+    protected function getMethodParams($params)
     {
         $method_params = [];
 
