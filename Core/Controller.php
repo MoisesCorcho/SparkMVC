@@ -35,8 +35,9 @@ abstract class Controller
      * filter methods on action methods. Action methods need to be named
      * with an "Action" suffix, e.g. indexAction, showAction etc.
      * 
-     * $this variable will have the value of the current child class instantiated.
-     * and the value of the $name parameter will be the current method we are trying to access.
+     * $this variable will have the value of the current child class 
+     * instantiated. and the value of the $name parameter will be the 
+     * current method we are trying to access.
      *
      * @param string $name  Method name
      * @param array $args Arguments passed to the method
