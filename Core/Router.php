@@ -129,8 +129,12 @@ class Router
                 $method = $this->params['method'];
                 $method = $this->convertToCamelCase($method);
 
+                // We get just the params the method should have
+                $method_params = $this->getMethodParams($this->params);
+
                 if (preg_match('/action$/i', $method) == 0) {
-                    $controller_object->$method();
+                    // $controller_object->$method();
+                    call_user_func_array([$controller_object, $method], $method_params);
                 } else {
                     throw new \Exception("Method $method in controller $controller cannot be called directly - remove the Action suffix to call this method");
                 }
@@ -245,6 +249,19 @@ class Router
         }
 
         return $namespace;
+    }
+
+    public function getMethodParams($params)
+    {
+        $method_params = [];
+
+        foreach ($params as $key => $value) {
+            if ( $key != 'controller' && $key != 'method' ) {
+                array_push($method_params, $value);
+            }
+        }
+
+        return $method_params;
     }
     
 }

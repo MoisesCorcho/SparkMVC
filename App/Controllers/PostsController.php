@@ -30,4 +30,12 @@ class PostsController extends Controller
     {
         View::renderBlade('Posts/edit', ['name' => 'John Doe']);
     }
+
+    public function show($id)
+    {
+        $postObj = new Post();
+        $post = $postObj->getPost($id);
+
+        View::renderBlade('Posts/show', ['post' => $post]);
+    }
 }
