@@ -48,7 +48,6 @@ class Routes
         Router::add('', ['controller' => 'HomeController', 'method' => 'index']);
         Router::add('{controller}/{method}');
         Router::add('{controller}/{method}/{id:\d+}');
-        Router::add('admin/{controller}/{method}', ['namespace' => 'Admin']);
 
         Router::dispatch();
     }

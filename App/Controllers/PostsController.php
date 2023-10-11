@@ -13,22 +13,12 @@ use App\Models\Post;
  */
 class PostsController extends Controller
 {
-    public function indexAction()
+    public function index()
     {
         $postObj = new Post();
         $posts = $postObj->getPosts();
 
         View::renderBlade('Posts/index', ['posts' => $posts]);
-    }
-
-    public function addNewAction()
-    {
-        echo 'Hello from the addNew method in the PostController';
-    }
-
-    public function editAction()
-    {
-        View::renderBlade('Posts/edit', ['name' => 'John Doe']);
     }
 
     public function show($id)

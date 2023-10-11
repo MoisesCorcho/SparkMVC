@@ -40,10 +40,7 @@ class HomeController extends Controller
      */
     public function indexAction()
     {
-        View::renderBlade('Home/welcome', [
-            'test' => 'Hey! Im just a test variable',
-            'colours' => ['green', 'red', 'blue']
-        ]);
+        View::renderBlade('Home/welcome');
     }
 
 }
