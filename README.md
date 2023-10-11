@@ -68,7 +68,8 @@ You have to modify the .htaccess file into public folder
 	  RewriteRule  ^(.*)$ index.php?$1 [L,QSA]
 	</IfModule>
 
-In `"PROJECT_PATH"` you have to put your project path (without "" characters). E.g. if you are working with XAMPP the path will start at `htdocs` folder.
+In `"PROJECT_PATH"` you have to put your project path including public folder at the end (without "" characters). E.g. if you are working with XAMPP the path will start at `htdocs` folder. 
+Example `"/projects/SparkMVC/public"`
 
 ## Routing
 
