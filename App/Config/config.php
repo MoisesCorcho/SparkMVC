@@ -37,7 +37,7 @@ class Config
      * Project root
      * @var string
      */
-    const URLROOT = 'http://localhost/proyectos/Moises/Php/sparkMVC';
+    const URLROOT = 'http://localhost/your_project_path';
 
     /**
      * Project name
@@ -58,7 +58,7 @@ class Config
      *
      * @return string
      */
-    public static function getAppRoot()
+    public static function APPROOT()
     {
         if (self::$APPROOT === null) {
             self::$APPROOT = dirname(dirname(__FILE__));
@@ -70,7 +70,7 @@ class Config
      * Show or hide error messages on screen
      * @var boolean
      */
-    const SHOW_ERRORS = true;
+    const SHOW_ERRORS = false;
 
     /**
      * Project Timezone
