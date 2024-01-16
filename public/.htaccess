@@ -1,6 +1,6 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteBase "PROJECT_PATH"
+  RewriteBase /proyectos/Moises/Php/SparkMVC/public
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteRule  ^(.*)$ index.php?$1 [L,QSA]
